@@ -19,7 +19,6 @@ import "./App.scss"
 
 function App() {
   const marsTheme = usePageStore((state) => state.theme);
-
   return (
     <ConfigProvider locale={locale} theme={{
       cssVar: true,
