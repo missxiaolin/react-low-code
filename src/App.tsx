@@ -1,38 +1,47 @@
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ConfigProvider, App as AntdApp, theme } from 'antd';
+import locale from 'antd/locale/zh_CN'; // 引入中文语言包
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+import weekday from 'dayjs/plugin/weekday';
+import localeData from 'dayjs/plugin/localeData';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import { RouterProvider } from 'react-router-dom';
+import router from './route/index';
+import AntdGlobal from './utils/AntdGlobal';
+import { usePageStore } from './stores/pageStore';
+
+dayjs.extend(relativeTime);
+dayjs.extend(weekday);
+dayjs.extend(localeData);
+dayjs.locale('zh-cn'); // 设置语言
+
+import "./App.scss"
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    console.log(count)
-  }, [count])
+  const marsTheme = usePageStore((state) => state.theme);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ConfigProvider locale={locale} theme={{
+      cssVar: true,
+      hashed: false,
+      token: {
+        colorPrimary: '#7D33FF',
+        colorLink: '#7D33FF',
+        colorInfo: '#7D33FF',
+      },
+      components: {
+        Menu: {
+          darkItemBg: '#000',
+          darkItemHoverColor: '#7D33FF',
+        },
+      },
+      algorithm: marsTheme === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
+    }}>
+      <AntdApp>
+        <AntdGlobal />
+        <RouterProvider router={router} />
+      </AntdApp>
+    </ConfigProvider>
   )
 }
 
