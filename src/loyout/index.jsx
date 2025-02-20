@@ -3,6 +3,7 @@ import { Layout } from "antd";
 import { usePageStore } from "../stores/pageStore";
 import Logo from "./components/logo";
 import MenuComponent from "./components/menu";
+import HeaderComponent from "./components/header";
 
 export default function Admin() {
   const collapsed = usePageStore((state) => state.collapsed);
@@ -14,7 +15,6 @@ export default function Admin() {
         <div
           style={{
             width: collapsed ? 80 : 256,
-            borderRight: "1px solid #e8e9eb",
             background: "var(--ant-color-bg-container)",
           }}
         >
@@ -25,9 +25,19 @@ export default function Admin() {
         <div
           style={{
             width: collapsed ? "calc(100vw - 80px)" : "calc(100vw - 256px)",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
-          <Outlet />
+          <HeaderComponent />
+          <div
+            style={{
+              flex: 1,
+              padding: "20px",
+            }}
+          >
+            <Outlet />
+          </div>
         </div>
       </Layout>
     </>

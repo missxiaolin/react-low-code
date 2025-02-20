@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { lazyLoad } from "./LazyLoad";
 import ErrorBoundary from "./ErrorBoundary";
+import { AppstoreOutlined } from "@ant-design/icons";
 import Root from "./Root";
 
 export const admRouter = [
@@ -12,7 +13,7 @@ export const admRouter = [
     meat: {
       title: "Dashboard",
       hideInMenu: false,
-      icon: "",
+      icon: <AppstoreOutlined />,
     },
     children: [
       {

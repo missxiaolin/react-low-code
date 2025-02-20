@@ -11,7 +11,7 @@ export interface PageAction {
 }
 
 export const usePageStore = create<PageState & PageAction>((set) => ({
-  theme: "light",
+  theme: "dark",
   // 切换主题
   setTheme: (theme: "light" | "dark") => set({ theme }),
   collapsed: false,
