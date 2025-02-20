@@ -6,7 +6,7 @@ import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { RouterProvider } from "react-router-dom";
-import router from "./route/index";
+import router from "./router/index";
 import AntdGlobal from "./utils/AntdGlobal";
 import { usePageStore } from "./stores/pageStore";
 

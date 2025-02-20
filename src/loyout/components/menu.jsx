@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { usePageStore } from "../../stores/pageStore";
 import { Menu } from "antd";
-import { admRouter } from "../../route/index";
+import { admRouter } from "../../router/index";
 
 export default function MenuComponent() {
   const [menuList, setMenuList] = useState([]);

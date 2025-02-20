@@ -27,6 +27,20 @@ export const admRouter = [
       },
     ],
   },
+  {
+    path: "/",
+    element: <Root />,
+    meat: {
+      title: "低代码",
+      hideInMenu: true,
+    },
+    children: [
+      {
+        path: "/form/edit",
+        element: lazyLoad(React.lazy(() => import("../pages/edit/Edit"))),
+      },
+    ],
+  },
 ];
 
 export const router = [

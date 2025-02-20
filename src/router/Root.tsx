@@ -1,4 +1,4 @@
-import Admin from "@/loyout";
+import Admin from "@/loyout/index";
 
 export default function Root() {
   return (
