@@ -33,7 +33,6 @@ export default function Login() {
     form.validateFields(["userName"]).then(async () => {
       setLoading1(true);
       try {
-        // await sendEmail({ email: userName });
         setCount(60);
         setLoading1(false);
       } catch {
