@@ -8,9 +8,10 @@
     color: #fff;
     width: 255px;
     background: var(--ant-color-bg-container);
-    img {
-        max-width: 80%;
-        max-height: 80%;
+    justify-content: center;
+    .logo-img {
+        width: 100px;
+        height: 20px;
     }
 }
 

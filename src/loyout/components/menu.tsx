@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePageStore } from "../../stores/pageStore";
 import { Menu } from "antd";
 import { admRouter } from "../../router/index";
@@ -9,11 +9,11 @@ export default function MenuComponent() {
   const theme = usePageStore((state) => state.theme);
   const [selectedKeys, setSelectedKeys] = useState([]);
 
-  const getTreeMenu = (data) => {
-    let arr = [];
-    data.forEach((item) => {
+  const getTreeMenu = (data: any) => {
+    const arr: any = [];
+    data.forEach((item: any) => {
       if (item.meat && !item.meat.hideInMenu) {
-        let obj = {
+        const obj: any = {
           label: item.meat.title,
           key: item.path,
           path: item.path,
@@ -33,7 +33,7 @@ export default function MenuComponent() {
     setMenuList(menuItem);
   }, []);
 
-  const onClick = (e) => {
+  const onClick = (e: any) => {
     console.log(e);
   };
 
@@ -48,7 +48,6 @@ export default function MenuComponent() {
       <Menu
         onClick={onClick}
         selectedKeys={selectedKeys}
-        theme={theme}
         style={{
           height: "calc(100vh - 64px)",
           border: "none",

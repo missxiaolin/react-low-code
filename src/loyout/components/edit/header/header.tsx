@@ -1,5 +1,5 @@
 import style from "./header.module.scss";
-import { usePageStore } from "../../../stores/pageStore";
+import { usePageStore } from "@/stores/pageStore";
 import { MoonFilled, SunOutlined } from "@ant-design/icons";
 import { Switch, Button } from "antd";
 import { useEffect } from "react";
@@ -7,7 +7,6 @@ import { useEffect } from "react";
 export default function Header() {
   const { setTheme, theme } = usePageStore((state) => state);
   useEffect(() => {
-    console.log(theme);
     document.documentElement.setAttribute(
       "data-theme",
       theme === "dark" ? "dark" : "light"
@@ -16,7 +15,17 @@ export default function Header() {
 
   return (
     <div className={style["header-box"]}>
-      <div></div>
+      <div className={style["header-left"]}>
+        {theme == "dark" ? (
+          <img
+            src="/imgs/lintcode-drank.png"
+            alt=""
+            className={style["logo-img"]}
+          />
+        ) : (
+          <img src="/imgs/lintcode.png" alt="" className={style["logo-img"]} />
+        )}
+      </div>
       <div className={style["header-right"]}>
         <div className={style["header-theme"]}>
           <Switch

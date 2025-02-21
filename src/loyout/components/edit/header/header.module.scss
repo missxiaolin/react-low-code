@@ -4,6 +4,15 @@
     justify-content: space-between;
     padding: 0 20px 0 20px;
     border-bottom: 1px solid var(--ant-color-border-secondary);
+    .header-left {
+        display: flex;
+        flex-direction: row;
+        .logo-img {
+            width: 100px;
+            height: 20px;
+            margin-top: 20px;
+        }
+    }
     .header-right {
         display: flex;
         flex-direction: row;
