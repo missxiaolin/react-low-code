@@ -1,21 +1,13 @@
 import style from "./header.module.scss";
-import { usePageStore } from "../../stores/pageStore";
-import { Switch } from "antd";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserOutlined,
-  MoonFilled,
-  SunOutlined,
-} from "@ant-design/icons";
+import { usePageStore } from "../../../stores/pageStore";
+import { MoonFilled, SunOutlined } from "@ant-design/icons";
+import { Switch, Button } from "antd";
 import { useEffect } from "react";
 
 export default function Header() {
-  const { collapsed, setTheme, updateCollapsed, theme } = usePageStore(
-    (state) => state
-  );
-
+  const { setTheme, theme } = usePageStore((state) => state);
   useEffect(() => {
+    console.log(theme);
     document.documentElement.setAttribute(
       "data-theme",
       theme === "dark" ? "dark" : "light"
@@ -23,16 +15,10 @@ export default function Header() {
   }, [theme]);
 
   return (
-    <div className={style.header}>
-      <div className={style["header-left"]}>
-        {!collapsed ? (
-          <MenuFoldOutlined onClick={updateCollapsed} />
-        ) : (
-          <MenuUnfoldOutlined onClick={updateCollapsed} />
-        )}
-      </div>
+    <div className={style["header-box"]}>
+      <div></div>
       <div className={style["header-right"]}>
-        <div className={style["theme-switcher"]}>
+        <div className={style["header-theme"]}>
           <Switch
             checkedChildren={<MoonFilled />}
             unCheckedChildren={<SunOutlined />}
@@ -47,8 +33,8 @@ export default function Header() {
             }}
           />
         </div>
-        <div className={style["user-info"]}>
-          <UserOutlined className={style["user-icon"]} /> Admin
+        <div className={style["save-box"]}>
+          <Button type="primary">保存</Button>
         </div>
       </div>
     </div>

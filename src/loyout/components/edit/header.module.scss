@@ -1,0 +1,18 @@
+.header-box {
+    display: flex;
+    height: 64px;
+    justify-content: space-between;
+    padding: 0 20px 0 20px;
+    border-bottom: 1px solid var(--ant-color-border-secondary);
+    .header-right {
+        display: flex;
+        flex-direction: row;
+    }
+    .header-theme {
+        margin-top: 20px;
+    }
+    .save-box {
+        margin-top: 15px;
+        margin-left: 20px;
+    }
+}

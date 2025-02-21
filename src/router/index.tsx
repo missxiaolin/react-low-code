@@ -4,6 +4,7 @@ import { lazyLoad } from "./LazyLoad";
 import ErrorBoundary from "./ErrorBoundary";
 import { AppstoreOutlined } from "@ant-design/icons";
 import Root from "./Root";
+import EditLayout from "@/loyout/EditLayout";
 
 export const admRouter = [
   {
@@ -29,7 +30,7 @@ export const admRouter = [
   },
   {
     path: "/",
-    element: <Root />,
+    element: <EditLayout />,
     meat: {
       title: "低代码",
       hideInMenu: true,
