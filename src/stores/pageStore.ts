@@ -72,6 +72,7 @@ export interface PageAction {
   updateCollapsed: () => void;
   addElement: (element: any) => void; // 添加元素
   addChildElements: (element: any) => void;
+  setFormData: (payload: any) => void; // 设置表单数据
 }
 
 export const usePageStore = create<PageState & PageAction>((set) => ({
@@ -85,6 +86,20 @@ export const usePageStore = create<PageState & PageAction>((set) => ({
         collapsed: !state.collapsed,
       };
     });
+  },
+  setFormData({ name, value, type }: any) {
+    set(
+      produce((state) => {
+        if (type === "override") {
+          state.page.formData[name] = value;
+        } else {
+          state.page.formData[name] = {
+            ...state.page.formData[name],
+            ...value,
+          };
+        }
+      })
+    );
   },
   // 编辑器
   mode: "edit",
