@@ -1,4 +1,10 @@
-import { ComponentType, PageVariable, EventType, ApiType } from "@/types";
+import {
+  ComponentType,
+  PageVariable,
+  EventType,
+  ApiType,
+  ComItemType,
+} from "@/types";
 import { create } from "zustand";
 import { produce } from "immer"; // immer库用于不可变数据
 import { cloneDeep } from "lodash-es";
@@ -58,12 +64,14 @@ export interface PageState {
       responseInterceptor?: string;
     };
   };
+  isUpdateToolbar: boolean; // 更新遮罩
 }
 
 export interface PageAction {
   setTheme: (theme: "light" | "dark") => void;
   updateCollapsed: () => void;
   addElement: (element: any) => void; // 添加元素
+  addChildElements: (element: any) => void;
 }
 
 export const usePageStore = create<PageState & PageAction>((set) => ({
@@ -125,6 +133,7 @@ export const usePageStore = create<PageState & PageAction>((set) => ({
       timeoutErrorMessage: "请求超时，请稍后再试",
     },
   },
+  isUpdateToolbar: false, // 更新遮罩
   // 添加组件
   addElement: (element: ComponentType) => {
     set(
@@ -158,6 +167,63 @@ export const usePageStore = create<PageState & PageAction>((set) => ({
         element.elements?.map((item) => {
           state.page.elementsMap[item.id] = item;
         });
+      })
+    );
+  },
+  // 添加子组件
+  addChildElements(element: ComponentType) {
+    set(
+      produce((state) => {
+        function deepFind(list: ComItemType[]) {
+          for (let i = 0; i < list.length; i++) {
+            const item = list[i];
+            // 根据parentId先找到当前组件的父组件
+            if (item.id == element.parentId) {
+              if (item.elements === undefined) {
+                item.elements = [];
+              }
+              item.elements.push({
+                id: element.id,
+                parentId: element.parentId,
+                type: element.type,
+                name: element.name,
+                elements:
+                  element.elements?.map((item) => ({
+                    id: item.id,
+                    parentId: element.id,
+                    type: item.type,
+                    name: item.name,
+                    elements: [],
+                  })) || [],
+              });
+              const childElement = cloneDeep({
+                ...element,
+                elements: undefined,
+                remoteUrl: element.remoteUrl,
+                remoteConfigUrl: element.remoteConfigUrl,
+                remoteCssUrl: element.remoteCssUrl,
+              });
+              if (element.config.props.formItem) {
+                childElement.config.props.formItem.name = createId(
+                  element.type,
+                  6
+                );
+              }
+              // 添加当前组件对象
+              state.page.elementsMap[element.id] = childElement;
+              // 添加子组件对象
+              element.elements?.map((item) => {
+                state.page.elementsMap[item.id] = item;
+              });
+              break;
+            } else if (item.elements?.length) {
+              deepFind(item.elements);
+            }
+          }
+          return list;
+        }
+        deepFind(state.page.elements);
+        state.isUpdateToolbar = !state.isUpdateToolbar;
       })
     );
   },

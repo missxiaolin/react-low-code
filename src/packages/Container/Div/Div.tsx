@@ -15,7 +15,7 @@ export interface IConfig {
  * @param style 组件样式
  * @returns
  */
-const Div = ({ id, type, config, elements }: ComponentType, ref: any) => {
+const Div: any = ({ id, type, config, elements }: ComponentType, ref: any) => {
   const addChildElements = usePageStore((state) => state.addChildElements);
   const [visible, setVisible] = useState(true);
   // 拖拽接收
@@ -78,4 +78,5 @@ const Div = ({ id, type, config, elements }: ComponentType, ref: any) => {
     )
   );
 };
+
 export default forwardRef(Div);

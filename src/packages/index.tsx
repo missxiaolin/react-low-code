@@ -14,7 +14,6 @@ for (const path in modules) {
   const [type, name] = path.split("/").slice(-2);
 
   if (type === "MarsRender") continue;
-  // console.log(type, name);
   if (name.indexOf("Schema") > -1) {
     componentMap[type + "Config"] = modules[path];
   }
