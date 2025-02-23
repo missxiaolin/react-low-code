@@ -2,7 +2,7 @@ import { ComponentType, IDragTargetItem } from "@/types";
 import { Button, Card } from "antd";
 import { useDrop } from "react-dnd";
 import { getComponent } from "@/packages/index";
-import MarsRender from "@/packages/MarsRender/MarsRender";
+import MarsRender from "@/packages/Render/Render";
 import { usePageStore } from "@/stores/pageStore";
 import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
 import { omit } from "lodash-es";

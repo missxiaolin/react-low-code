@@ -65,6 +65,7 @@ export interface PageState {
     };
   };
   isUpdateToolbar: boolean; // 更新遮罩
+  selectedElement: { type: string; id: string } | undefined;
 }
 
 export interface PageAction {
@@ -73,6 +74,7 @@ export interface PageAction {
   addElement: (element: any) => void; // 添加元素
   addChildElements: (element: any) => void;
   setFormData: (payload: any) => void; // 设置表单数据
+  setSelectedElement: (payload: any) => void;
 }
 
 export const usePageStore = create<PageState & PageAction>((set) => ({
@@ -241,5 +243,12 @@ export const usePageStore = create<PageState & PageAction>((set) => ({
         state.isUpdateToolbar = !state.isUpdateToolbar;
       })
     );
+  },
+  selectedElement: undefined, // 当前选中的组件
+  // 设置选中的组件列表
+  setSelectedElement(payload: any) {
+    set(() => {
+      return { selectedElement: payload };
+    });
   },
 }));

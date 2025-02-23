@@ -10,7 +10,7 @@ import {
 import { useDrop } from "react-dnd";
 import { useShallow } from "zustand/react/shallow";
 import { getComponent } from "@/packages/index";
-import MarsRender from "@/packages/MarsRender/MarsRender";
+import MarsRender from "@/packages/Render/Render";
 import { usePageStore } from "@/stores/pageStore";
 import { FormContext } from "@/packages/utils/context";
 import {

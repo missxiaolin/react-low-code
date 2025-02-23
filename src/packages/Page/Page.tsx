@@ -1,4 +1,4 @@
-import MarsRender from "@/packages/MarsRender/MarsRender";
+import MarsRender from "@/packages/Render/Render";
 import { usePageStore } from "@/stores/pageStore";
 import React, { useEffect } from "react";
 import { handleActionFlow } from "@/packages/utils/action";
