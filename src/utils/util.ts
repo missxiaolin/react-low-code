@@ -1,5 +1,5 @@
 import components from "@/config/components";
-import { ComponentType } from "@/types";
+import { ComItemType, ComponentType } from "@/types";
 
 /**
  * 生成组件ID
@@ -64,4 +64,54 @@ export const checkComponentType = (
     }
   }
   return true;
+};
+
+/**
+ * 递归获取元素的相对位置(相对于pageWrapper)
+ */
+
+export function getBoundingClientRect(element: any) {
+  let offsetTop = 0;
+  let offsetLeft = 0;
+  const { width, height } = element.getBoundingClientRect();
+  while (element) {
+    // 如果是顶级元素，则直接跳出循环
+    if (element.id === "editor") {
+      offsetTop -= element.offsetTop;
+      break;
+    }
+    offsetTop += element.offsetTop;
+    offsetLeft += element.offsetLeft;
+    element = element.offsetParent;
+  }
+
+  return {
+    width: width,
+    height: height,
+    top: offsetTop,
+    left: offsetLeft,
+  };
+}
+
+/**
+ * 递归查找组件
+ * element：返回当前元素
+ * index：返回当前元素在父级中的索引
+ * elements：返回父级列表
+ */
+export const getElement = (
+  elements: ComItemType[],
+  id?: string
+): { element: ComItemType | null; index: number; elements: ComItemType[] } => {
+  if (!id) return { element: null, index: -1, elements: [] };
+  for (let i = 0; i < elements.length; i++) {
+    const item = elements[i];
+    if (item.id == id) {
+      return { element: item, index: i, elements };
+    } else if (item.elements?.length) {
+      const result = getElement(item.elements, id);
+      if (result.element) return result;
+    }
+  }
+  return { element: null, index: -1, elements: [] };
 };

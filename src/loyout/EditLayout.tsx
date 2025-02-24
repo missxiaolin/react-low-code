@@ -43,7 +43,14 @@ export default function EditLayout() {
               <Splitter.Panel size={sizes[1]}>
                 <Outlet />
               </Splitter.Panel>
-              <Splitter.Panel collapsible size={sizes[2]} min={320}>
+              <Splitter.Panel
+                collapsible
+                size={sizes[2]}
+                min={320}
+                style={{
+                  height: "100%",
+                }}
+              >
                 <React.Suspense fallback={<SpinLoading />}>
                   <ConfigPanel />
                 </React.Suspense>

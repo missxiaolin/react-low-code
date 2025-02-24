@@ -71,10 +71,13 @@ export interface PageState {
 export interface PageAction {
   setTheme: (theme: "light" | "dark") => void;
   updateCollapsed: () => void;
+  savePageInfo: (pageInfo: any) => void;
   addElement: (element: any) => void; // 添加元素
   addChildElements: (element: any) => void;
   setFormData: (payload: any) => void; // 设置表单数据
   setSelectedElement: (payload: any) => void;
+  moveElements: (payload: any) => void; // 移动元素
+  removeElements: (payload: any) => void; // 删除元素
 }
 
 export const usePageStore = create<PageState & PageAction>((set) => ({
@@ -150,6 +153,25 @@ export const usePageStore = create<PageState & PageAction>((set) => ({
       timeoutErrorMessage: "请求超时，请稍后再试",
     },
   },
+  savePageInfo: (payload: any) =>
+    set(
+      produce((state) => {
+        if (payload.type === "props") {
+          state.page.config.props = payload.props;
+        } else if (payload.type === "style") {
+          // 如果是style，则直接更新
+          state.page.config.scopeCss = payload.scopeCss;
+          state.page.config.scopeStyle = payload.scopeStyle;
+          state.page.config.style = payload.style;
+        } else if (payload.type === "events") {
+          state.page.config.events = payload.events || [];
+        } else if (payload.type === "api") {
+          state.page.config.api = payload.api;
+        } else {
+          state.page = Object.assign(state.page, payload);
+        }
+      })
+    ),
   isUpdateToolbar: false, // 更新遮罩
   // 添加组件
   addElement: (element: ComponentType) => {
@@ -250,5 +272,63 @@ export const usePageStore = create<PageState & PageAction>((set) => ({
     set(() => {
       return { selectedElement: payload };
     });
+  },
+  // 组件排序
+  moveElements(payload: any) {
+    set(
+      produce((state) => {
+        const { componentId, direction } = payload;
+        function deepFind(list: ComponentType[]) {
+          for (let index = 0; index < list.length; index++) {
+            const item = list[index];
+            if (item.id == componentId) {
+              if (direction === "up" && index > 0) {
+                [list[index], list[index - 1]] = [list[index - 1], list[index]];
+              } else if (direction === "down" && list.length - 1 > index) {
+                [list[index], list[index + 1]] = [list[index + 1], list[index]];
+              }
+              break;
+            } else if (item.elements?.length) {
+              deepFind(item.elements);
+            }
+          }
+        }
+        deepFind(state.page.elements);
+      })
+    );
+  },
+  removeElements(payload: any) {
+    set(
+      produce((state) => {
+        const id = payload;
+        function deepFind(list: ComponentType[]) {
+          for (let i = 0; i < list.length; i++) {
+            const item = list[i];
+            if (item.id == id) {
+              list.splice(i, 1);
+              delete state.page.elementsMap[id];
+
+              // 递归删除相互引用的嵌套父子组件
+              const deepRemove = (id: string) => {
+                // 删除子组件
+                Object.values(state.page.elementsMap).map((item: any) => {
+                  if (item.parentId == id) {
+                    delete state.page.elementsMap[item.id];
+                    deepRemove(item.id);
+                  }
+                  return item;
+                });
+              };
+              deepRemove(id);
+              break;
+            } else if (item.elements?.length) {
+              deepFind(item.elements);
+            }
+          }
+        }
+        deepFind(state.page.elements);
+        state.selectedElement = undefined;
+      })
+    );
   },
 }));

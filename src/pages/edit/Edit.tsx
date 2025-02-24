@@ -4,22 +4,38 @@ import React, { useEffect, useState } from "react";
 import { IDragTargetItem } from "@/types/index";
 import { usePageStore } from "@/stores/pageStore";
 import { useDebounceFn } from "ahooks"; // 使用ahooks的防抖函数
-import { createId, checkComponentType } from "@/utils/util";
+import { createId, checkComponentType, getElement } from "@/utils/util";
 import { getComponent } from "@/packages/index";
+import Toolbar from "@/components/toolbar/index";
 import "./index.scss";
 import { message } from "@/utils/AntdGlobal";
 import Page from "@/packages/Page/Page";
+import PageConfig from "@/packages/Page/Schema";
+import storage from "@/utils/storage";
 
 export default function Edit() {
   // 悬浮组件 - 展示悬浮条
   const [hoverTarget, setHoverTarget] = useState<HTMLElement | null>(null);
 
-  const { theme, mode, addElement, selectedElement, setSelectedElement, page } =
-    usePageStore((state) => state);
-  const { elementsMap } = page;
+  const {
+    theme,
+    mode,
+    addElement,
+    selectedElement,
+    setSelectedElement,
+    page,
+    savePageInfo,
+    addChildElements,
+    removeElements,
+  } = usePageStore((state) => state);
+  const { elementsMap, elements } = page;
   const [loaded, setLoaded] = useState(false); // 是否加载完成
 
   useEffect(() => {
+    savePageInfo({
+      config: PageConfig.config,
+      events: PageConfig.events,
+    });
     setLoaded(true);
     return () => {
       setHoverTarget(null); // 清空悬浮组件
@@ -99,7 +115,7 @@ export default function Edit() {
     }),
   });
 
-  const handleClick = (event: MouseEvent) => {
+  const handleClick: any = (event: MouseEvent) => {
     event.stopPropagation();
     if (mode === "preview") return;
     const target = event.target as HTMLElement;
@@ -139,6 +155,69 @@ export default function Edit() {
   };
   const { run }: any = useDebounceFn(handleOver, { wait: 150 });
 
+  // 深度递归复制
+  function deepCopy(list: any[], parentId: string) {
+    for (let i = 0; i < list.length; i++) {
+      const pId = createId(list[i].id.split("_")[0]);
+      addChildElements({
+        ...elementsMap[list[i].id],
+        parentId,
+        elements: [],
+        id: pId,
+      });
+      if (list[i].elements?.length > 0) {
+        deepCopy(list[i].elements, pId);
+      }
+    }
+  }
+
+  // 复制
+  const copyElement: any = () => {
+    // @ts-ignore
+    storage.set("copy_component", selectedElement?.id);
+  };
+
+  // 粘贴
+  const pastElement: any = () => {
+    const id = storage.get("copy_component");
+    if (!id) {
+      return message.info("暂无复制内容");
+    }
+    let parentId = elementsMap[id]?.parentId;
+    if (selectedElement?.id !== id) {
+      parentId = selectedElement?.id;
+    }
+    // 如果没有父组件，在页面最外层先复制一个元素
+    if (!parentId) {
+      const { element: current } = getElement(elements, id);
+      const newId = createId(id.split("_")[0]);
+      addElement({
+        ...elementsMap[id],
+        elements: [],
+        id: newId,
+      });
+
+      // 如果该元素存在子元素，需要递归复制
+      deepCopy(current?.elements || [], newId);
+    } else {
+      const { element: current } = getElement(elements, id);
+      const newId = createId(id.split("_")[0]);
+      addChildElements({
+        ...elementsMap[id],
+        elements: [],
+        parentId,
+        id: newId,
+      });
+      // 如果该元素存在子元素，需要递归复制
+      deepCopy(current?.elements || [], newId);
+    }
+  };
+  const delElement: any = () => {
+    if (selectedElement) {
+      removeElements(selectedElement.id);
+    }
+  };
+
   return (
     <ConfigProvider
       theme={{
@@ -166,6 +245,14 @@ export default function Edit() {
           onClick={handleClick}
           onMouseOver={run}
         >
+          {mode === "edit" && (
+            <Toolbar
+              copyElement={copyElement}
+              pastElement={pastElement}
+              delElement={delElement}
+              hoverTarget={hoverTarget}
+            />
+          )}
           <React.Suspense fallback={<div>Loading...</div>}>
             {loaded && <Page />}
           </React.Suspense>
