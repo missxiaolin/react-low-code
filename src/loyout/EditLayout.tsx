@@ -3,12 +3,12 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { ConfigProvider, Splitter } from "antd";
 import style from "./edit.module.scss";
-import Header from "./components/edit/header/header";
+import Header from "./components/edit/Header/header";
 import React, { useState, lazy } from "react";
 import SpinLoading from "@/components/SpinLoading";
 
-const Menu = lazy(() => import("./components/edit/menu/index"));
-const ConfigPanel = lazy(() => import("./components/edit/configPanel/index"));
+const Menu = lazy(() => import("./components/edit/Menu/index"));
+const ConfigPanel = lazy(() => import("./components/edit/ConfigPanel/index"));
 
 export default function EditLayout() {
   const [sizes, setSizes] = useState<(number | string)[]>([

@@ -1,5 +1,5 @@
 import { Col, Row, Tabs, Tooltip, Space, Empty } from "antd";
-import ComponentPanel from "./componentPanel";
+import ComponentPanel from "./ComponentPanel";
 import {
   AppstoreOutlined,
   QuestionCircleOutlined,

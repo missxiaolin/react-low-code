@@ -3,7 +3,7 @@ import { Tabs, Collapse, Empty, Col, Row, Input, Divider } from "antd";
 import { useDebounceFn } from "ahooks";
 import components, { SysComItem } from "@/config/components";
 import { SearchOutlined, UpOutlined } from "@ant-design/icons";
-import DragMenuItem from "../dragMenuItem";
+import DragMenuItem from "../DragMenuItem";
 
 export default function ComponentPanel() {
   const [activeKeys, setActiveKeys] = useState<string[]>([]);

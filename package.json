@@ -5,13 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "tsc-build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.1",
     "@ant-design/plots": "^2.3.3",
+    "@monaco-editor/react": "^4.7.0",
     "@types/lodash-es": "^4.17.12",
     "ahooks": "^3.8.4",
     "antd": "^5.24.1",

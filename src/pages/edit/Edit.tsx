@@ -6,7 +6,7 @@ import { usePageStore } from "@/stores/pageStore";
 import { useDebounceFn } from "ahooks"; // 使用ahooks的防抖函数
 import { createId, checkComponentType, getElement } from "@/utils/util";
 import { getComponent } from "@/packages/index";
-import Toolbar from "@/components/toolbar/index";
+import Toolbar from "@/components/Toolbar/index";
 import "./index.scss";
 import { message } from "@/utils/AntdGlobal";
 import Page from "@/packages/Page/Page";
@@ -43,18 +43,18 @@ export default function Edit() {
     };
   }, []);
   // 当页面和用户有交互时，增加刷新和返回提示。
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      // Cancel the event as stated by the standard.
-      event.preventDefault();
-      // Chrome requires returnValue to be set.
-      event.returnValue = "";
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+  //     // Cancel the event as stated by the standard.
+  //     event.preventDefault();
+  //     // Chrome requires returnValue to be set.
+  //     event.returnValue = "";
+  //   };
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //   };
+  // }, []);
 
   // 拖拽接收
   const [, drop] = useDrop({

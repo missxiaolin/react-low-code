@@ -8,7 +8,7 @@ import {
 import { create } from "zustand";
 import { produce } from "immer"; // immer库用于不可变数据
 import { cloneDeep } from "lodash-es";
-import { createId } from "@/utils/util";
+import { createId, getElement } from "@/utils/util";
 
 export interface PageState {
   theme: string;
@@ -78,6 +78,7 @@ export interface PageAction {
   setSelectedElement: (payload: any) => void;
   moveElements: (payload: any) => void; // 移动元素
   removeElements: (payload: any) => void; // 删除元素
+  editElement: (payload: any) => void; // 编辑元素
 }
 
 export const usePageStore = create<PageState & PageAction>((set) => ({
@@ -328,6 +329,85 @@ export const usePageStore = create<PageState & PageAction>((set) => ({
         }
         deepFind(state.page.elements);
         state.selectedElement = undefined;
+      })
+    );
+  },
+  // 更新组件属性、样式
+  editElement(payload: any) {
+    set(
+      produce((state) => {
+        const item = state.page.elementsMap[payload.id];
+        // 属性修改
+        if (payload.type === "props") {
+          item.config.props = payload.props;
+          // Tabs标签对象需要同步属性值到Tab组件中
+          if (item.type === "Tabs") {
+            const { element: parentItem } = getElement(
+              state.page.elements,
+              payload.id
+            );
+            if (parentItem?.elements.length === payload.props.items.length) {
+              parentItem?.elements.map((item: any, index: any) => {
+                Object.assign(
+                  state.page.elementsMap[item.id].config.props,
+                  payload.props.items[index]
+                );
+              });
+            } else {
+              parentItem?.elements.map((item: any, index: any) => {
+                if (
+                  !payload.props.items.find(
+                    (prop: { id: string }) => prop.id === item.id
+                  )
+                ) {
+                  parentItem?.elements.splice(index, 1);
+                  delete state.page.elementsMap[item.id];
+                  // 递归删除相互引用的嵌套父子组件
+                  const deepRemove = (id: string) => {
+                    // 删除子组件
+                    Object.values(state.page.elementsMap).map((item: any) => {
+                      if (item.parentId == id) {
+                        delete state.page.elementsMap[item.id];
+                        deepRemove(item.id);
+                      }
+                      return item;
+                    });
+                  };
+                  deepRemove(item.id);
+                }
+              });
+            }
+          }
+          // Tab对象需要同步属性值到Tabs组件中
+          if (item.type === "Tab") {
+            state.page.elementsMap[item.parentId].config.props.items.map(
+              (item: { key: string; label: string }) => {
+                if (item.key === payload.id) {
+                  item.label = payload.props.label;
+                }
+              }
+            );
+          }
+        } else if (payload.type === "style") {
+          // 如果是style，则直接更新
+          item.config.scopeCss = payload.scopeCss;
+          item.config.scopeStyle = payload.scopeStyle;
+          item.config.style = payload.style;
+        } else if (payload.type === "events") {
+          item.config.events = payload.events || [];
+        } else if (payload.type === "api") {
+          item.config.api = payload.api;
+          if (payload.api.sourceType !== "api") {
+            item.config.api.id = undefined;
+          } else {
+            // 如果ID存在，更新一下数据源字段即可。
+            if (payload.api.id) {
+              state.page.apis[payload.api.id].sourceField =
+                payload.api.sourceField;
+            }
+          }
+        }
+        state.isUpdateToolbar = !state.isUpdateToolbar;
       })
     );
   },
