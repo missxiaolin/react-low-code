@@ -31,14 +31,14 @@ export default defineConfig({
     react(),
     process.env.NODE_ENV === "production" &&
       VitePluginExternals({
-        // react: {
-        //   src: '/static/lib/',
-        //   varName: 'React',
-        // },
-        // 'react-dom': {
-        //   src: '/static/lib/',
-        //   varName: 'ReactDOM',
-        // },
+        react: {
+          src: "/static/lib/react.production.min.js",
+          varName: "React",
+        },
+        "react-dom": {
+          src: "/static/lib/react-dom.production.min.js",
+          varName: "ReactDOM",
+        },
         dayjs: {
           src: "/static/lib/dayjs.min.js",
           varName: "dayjs",
