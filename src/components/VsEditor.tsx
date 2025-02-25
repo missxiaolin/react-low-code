@@ -1,13 +1,8 @@
 import { isNotEmpty } from "@/packages/utils/util";
 import { usePageStore } from "@/stores/pageStore";
 import Editor, { loader, useMonaco } from "@monaco-editor/react";
-import * as monaco from "monaco-editor";
-import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
-import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
-import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
-import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
-import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
 import { useEffect, useRef } from "react";
+// import * as monaco from "monaco-editor";
 /**
  * 封装vscode编辑器
  */
@@ -61,7 +56,11 @@ export default function VsEditor({ height, language, value, onChange }: any) {
     ];
   }
   // 初始化monaco，默认为jsdelivery分发，由于网络原因改为本地cdn
-  loader.config(monaco);
+  loader.config({
+    paths: {
+      vs: `${window.location.origin}/static/monaco-editor/min/vs`,
+    },
+  });
   return (
     <Editor
       height={height || "150px"}
