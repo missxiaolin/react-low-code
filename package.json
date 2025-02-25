@@ -13,6 +13,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.6.1",
     "@ant-design/plots": "^2.3.3",
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@monaco-editor/react": "^4.7.0",
     "@types/lodash-es": "^4.17.12",
     "ahooks": "^3.8.4",
@@ -27,6 +28,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.1.5",
     "sass": "^1.85.0",
+    "vite-plugin-externals-new": "^1.5.5",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
