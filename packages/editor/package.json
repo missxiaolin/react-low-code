@@ -19,7 +19,8 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "copy-to-clipboard": "^3.3.3",
-    "vite-plugin-externals-new": "^1.5.5"
+    "vite-plugin-externals-new": "^1.5.5",
+    "style-to-object": "^1.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

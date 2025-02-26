@@ -13,6 +13,8 @@ import styles from "./index.module.scss";
 
 // 属性设置器
 const SetterRender = lazy(() => import("../SetterRender/index"));
+// 样式配置
+const StyleConfig = lazy(() => import("@/components/StyleConfig/index"));
 
 const ConfigPanel = memo(() => {
   const { selectedElement, savePageInfo, editElement, page } = usePageStore(
@@ -140,7 +142,11 @@ const ConfigPanel = memo(() => {
     {
       key: "style",
       label: `样式`,
-      children: <div>样式</div>,
+      children: (
+        <Suspense fallback={<SpinLoading />}>
+          <StyleConfig />
+        </Suspense>
+      ),
     },
     {
       key: "event",

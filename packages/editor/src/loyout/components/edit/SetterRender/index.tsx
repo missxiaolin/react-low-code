@@ -19,7 +19,7 @@ import styles from "./index.module.scss";
 import MColorPicker from "@/components/ColorPicker";
 import VariableBindInput from "@/components/VariableBind/VariableBind";
 import InputSelect from "@/components/InputSelect";
-import InputPx from "@/components/StyleConfig/inputPx";
+import InputPx from "@/components/StyleConfig/Ipx";
 
 // 如果没有设置label，则独占一行
 const formLayoutFull = {

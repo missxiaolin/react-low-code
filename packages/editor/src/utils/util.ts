@@ -1,5 +1,6 @@
 import components from "@/config/components";
 import { ComItemType, ComponentType } from "@/types";
+import parse from "style-to-object";
 
 /**
  * 生成组件ID
@@ -114,4 +115,31 @@ export const getElement = (
     }
   }
   return { element: null, index: -1, elements: [] };
+};
+
+/**
+ * 解析CSS样式
+ */
+export const parseStyle = (inputCss: string) => {
+  const cssObject: { [key: string]: string } = {};
+  // 如果CSS发生变化，需要把文本转换为Object对象
+  if (inputCss) {
+    try {
+      // 删除注释、删除.mars{}，只保留中间部分
+      inputCss = inputCss
+        .replace(/\/\*.*\*\//, "")
+        .replace(/(\.?\w+{)/, "")
+        .replace("}", "");
+      parse(inputCss, (name, value) => {
+        // 把中划线语法替换为驼峰
+        cssObject[
+          name.replace(/-\w/g, (item) => item.toUpperCase().replace("-", ""))
+        ] = value;
+      });
+    } catch (error) {
+      // 如果报错，说明CSS没写完，不能生成对应object，此时直接返回，不需要保存
+      return;
+    }
+  }
+  return cssObject;
 };
