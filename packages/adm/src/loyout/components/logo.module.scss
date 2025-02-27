@@ -1,0 +1,22 @@
+.logo {
+    font-size: 20px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    color: #fff;
+    width: 255px;
+    background: var(--ant-color-bg-container);
+    justify-content: center;
+    .logo-img {
+        width: 100px;
+        height: 20px;
+    }
+}
+
+.logoName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

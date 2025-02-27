@@ -6,7 +6,9 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "start:editor": "pnpm --filter editor start",
-    "build:editor": "pnpm --filter editor build"
+    "build:editor": "pnpm --filter editor build",
+    "start:adm": "pnpm --filter editor start",
+    "build:adm": "pnpm --filter editor build"
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.1",

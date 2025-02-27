@@ -45,6 +45,67 @@ importers:
         specifier: ^5.0.3
         version: 5.0.3(@types/react@18.3.18)(immer@10.1.1)(react@18.3.1)(use-sync-external-store@1.4.0(react@18.3.1))
 
+  packages/adm:
+    dependencies:
+      '@ant-design/v5-patch-for-react-19':
+        specifier: ^1.0.3
+        version: 1.0.3(antd@5.24.2(moment@2.30.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      copy-to-clipboard:
+        specifier: ^3.3.3
+        version: 3.3.3
+      immer:
+        specifier: ^10.1.1
+        version: 10.1.1
+      path:
+        specifier: ^0.12.7
+        version: 0.12.7
+      style-to-object:
+        specifier: ^1.0.5
+        version: 1.0.8
+    devDependencies:
+      '@eslint/js':
+        specifier: ^9.13.0
+        version: 9.21.0
+      '@types/react':
+        specifier: ^18.3.12
+        version: 18.3.18
+      '@types/react-dom':
+        specifier: ^18.3.1
+        version: 18.3.5(@types/react@18.3.18)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.3
+        version: 4.3.4(vite@5.4.14(@types/node@22.13.5)(less@4.2.2)(lightningcss@1.29.1)(sass@1.85.1)(sugarss@2.0.0)(terser@5.39.0))
+      eslint:
+        specifier: ^9.13.0
+        version: 9.21.0
+      eslint-plugin-react-hooks:
+        specifier: ^5.0.0
+        version: 5.1.0(eslint@9.21.0)
+      eslint-plugin-react-refresh:
+        specifier: ^0.4.14
+        version: 0.4.19(eslint@9.21.0)
+      globals:
+        specifier: ^15.11.0
+        version: 15.15.0
+      rollup-plugin-visualizer:
+        specifier: ^5.14.0
+        version: 5.14.0(rollup@4.34.8)
+      typescript:
+        specifier: ~5.6.2
+        version: 5.6.3
+      typescript-eslint:
+        specifier: ^8.11.0
+        version: 8.25.0(eslint@9.21.0)(typescript@5.6.3)
+      vite:
+        specifier: ^5.4.10
+        version: 5.4.14(@types/node@22.13.5)(less@4.2.2)(lightningcss@1.29.1)(sass@1.85.1)(sugarss@2.0.0)(terser@5.39.0)
+      vite-plugin-externals-new:
+        specifier: ^1.5.5
+        version: 1.5.5(vite@5.4.14(@types/node@22.13.5)(less@4.2.2)(lightningcss@1.29.1)(sass@1.85.1)(sugarss@2.0.0)(terser@5.39.0))
+      vite-plugin-svgr:
+        specifier: ^4.3.0
+        version: 4.3.0(rollup@4.34.8)(typescript@5.6.3)(vite@5.4.14(@types/node@22.13.5)(less@4.2.2)(lightningcss@1.29.1)(sass@1.85.1)(sugarss@2.0.0)(terser@5.39.0))
+
   packages/editor:
     dependencies:
       '@ant-design/v5-patch-for-react-19':
