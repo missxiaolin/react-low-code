@@ -1,1 +1,0 @@
-import{m as o}from"./index-C6R2FIrg.js";const e=window.React.createContext,r=window.React.useContext,n=e(null),s=()=>{const t=r(n);return t||(console.warn("表单组件必须放在Form组件、SearchForm组件或者GridForm组件内"),o.warning("表单项必须放在Form组件、SearchForm组件或者GridForm组件内"),{initValues(){}})};export{n as FormContext,s as useFormContext};

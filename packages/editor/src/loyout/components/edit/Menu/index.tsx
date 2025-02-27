@@ -1,13 +1,19 @@
-import { Col, Row, Tabs, Tooltip, Space, Empty } from "antd";
+import { Col, Row, Tabs, Tooltip, Space } from "antd";
 import ComponentPanel from "./ComponentPanel";
 import {
   AppstoreOutlined,
   QuestionCircleOutlined,
   PartitionOutlined,
+  CodeOutlined,
 } from "@ant-design/icons";
 import styles from "./index.module.scss";
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import SpinLoading from "@/components/SpinLoading";
+
+// 组件大纲
+const OutlinePanel = lazy(() => import("./OutlinePanel"));
+// 页面源码
+const CodingPanel = lazy(() => import("./CodingPanel"));
 
 export default function Menu() {
   const panels = [
@@ -40,7 +46,16 @@ export default function Menu() {
         </Space>
       ),
       component: () => {
-        return <Empty />;
+        return <OutlinePanel />;
+      },
+    },
+    {
+      key: "CodingPanel",
+      icon: <CodeOutlined />,
+      label: "源码",
+      title: <span>页面JSON</span>,
+      component: () => {
+        return <CodingPanel />;
       },
     },
   ];

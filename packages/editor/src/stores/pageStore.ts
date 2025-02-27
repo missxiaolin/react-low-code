@@ -82,6 +82,7 @@ export interface PageAction {
   moveElements: (payload: any) => void; // 移动元素
   removeElements: (payload: any) => void; // 删除元素
   editElement: (payload: any) => void; // 编辑元素
+  dragSortElements: (payload: any) => void; // 拖拽排序
 }
 
 export const usePageStore = create<PageState & PageAction>((set) => ({
@@ -411,6 +412,15 @@ export const usePageStore = create<PageState & PageAction>((set) => ({
           }
         }
         state.isUpdateToolbar = !state.isUpdateToolbar;
+      })
+    );
+  },
+  // 组件大纲拖拽排序
+  dragSortElements({ id, list, parentId }: any) {
+    set(
+      produce((state) => {
+        state.page.elements = list;
+        state.page.elementsMap[id].parentId = parentId;
       })
     );
   },
