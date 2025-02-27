@@ -15,6 +15,10 @@ import styles from "./index.module.scss";
 const SetterRender = lazy(() => import("../SetterRender/index"));
 // 样式配置
 const StyleConfig = lazy(() => import("@/components/StyleConfig/index"));
+// 事件配置
+const EventConfig = lazy(() => import("@/components/EventConfig"));
+// 接口配置
+const ApiConfig = lazy(() => import("@/components/ApiConfig"));
 
 const ConfigPanel = memo(() => {
   const { selectedElement, savePageInfo, editElement, page } = usePageStore(
@@ -151,12 +155,20 @@ const ConfigPanel = memo(() => {
     {
       key: "event",
       label: `事件`,
-      children: <div>事件</div>,
+      children: (
+        <Suspense fallback={<SpinLoading />}>
+          <EventConfig />
+        </Suspense>
+      ),
     },
     {
       key: "api",
       label: `数据`,
-      children: <div>数据</div>,
+      children: (
+        <Suspense fallback={<SpinLoading />}>
+          <ApiConfig />
+        </Suspense>
+      ),
     },
   ];
 

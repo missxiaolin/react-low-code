@@ -72,6 +72,9 @@ export interface PageAction {
   setTheme: (theme: "light" | "dark") => void;
   updateCollapsed: () => void;
   savePageInfo: (pageInfo: any) => void;
+  addApi: (api: ApiType) => void; // 添加接口
+  updateApi: (api: ApiType) => void; // 更新接口
+  removeApi: (name: string) => void; // 删除接口
   addElement: (element: any) => void; // 添加元素
   addChildElements: (element: any) => void;
   setFormData: (payload: any) => void; // 设置表单数据
@@ -408,6 +411,27 @@ export const usePageStore = create<PageState & PageAction>((set) => ({
           }
         }
         state.isUpdateToolbar = !state.isUpdateToolbar;
+      })
+    );
+  },
+  addApi: (api) => {
+    set(
+      produce((state) => {
+        state.page.apis[api.id] = api;
+      })
+    );
+  },
+  updateApi: (api) => {
+    set(
+      produce((state) => {
+        Object.assign(state.page.apis[api.id], api);
+      })
+    );
+  },
+  removeApi: (id) => {
+    set(
+      produce((state) => {
+        delete state.page.apis[id];
       })
     );
   },

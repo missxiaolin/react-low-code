@@ -33,7 +33,6 @@ interface IAttrs {
 
 const SetterRender = memo(({ attrs, form }: IAttrs) => {
   if (attrs.length === 0) return <></>;
-  console.log(attrs);
 
   // 根据type枚举
   return (

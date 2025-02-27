@@ -3,6 +3,26 @@ import { ComItemType, ComponentType } from "@/types";
 import parse from "style-to-object";
 
 /**
+ * 生成UUID
+ * @returns
+ */
+export function generateUUID(): string {
+  if (crypto?.randomUUID) {
+    return crypto.randomUUID();
+  }
+  const randomMethod = () => {
+    if (crypto?.getRandomValues) {
+      return crypto.getRandomValues(new Uint8Array(1))[0];
+    } else {
+      return Math.floor(Math.random() * 256);
+    }
+  };
+  return (String(1e7) + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+    (Number(c) ^ (randomMethod() & (15 >> (Number(c) / 4)))).toString(16)
+  );
+}
+
+/**
  * 生成组件ID
  * @param name 组件类型名称
  * @returns 新名称
