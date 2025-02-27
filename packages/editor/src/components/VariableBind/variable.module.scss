@@ -1,10 +1,10 @@
 .container {
     display: flex;
-    border: 1px solid var(--xl-theme-card-border-color);
+    border: 1px solid var(--l-theme-card-border-color);
     height: 500px;
     .leftFn {
       width: 160px;
-      border-right: 1px solid var(--xl-theme-card-border-color);
+      border-right: 1px solid var(--l-theme-card-border-color);
       overflow: hidden;
       ul,
       li {
@@ -32,11 +32,11 @@
       padding-left: 10px;
       line-height: 30px;
       margin-bottom: 10px;
-      background-color: var(--xl-theme-color);
+      background-color: var(--l-theme-color);
     }
     .variable {
       width: 350px;
-      border-left: 1px solid var(--xl-theme-card-border-color);
+      border-left: 1px solid var(--l-theme-card-border-color);
       overflow-y: auto;
     }
   }
