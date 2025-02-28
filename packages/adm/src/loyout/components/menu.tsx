@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { usePageStore } from "../../stores/pageStore";
+import { useProjectStore } from "../../stores/pageStore";
 import { Menu } from "antd";
 import { admRouter } from "../../router/index";
+import styles from "./menu.module.scss";
 
 export default function MenuComponent() {
   const [menuList, setMenuList] = useState([]);
-  const collapsed = usePageStore((state) => state.collapsed);
-  const theme = usePageStore((state) => state.theme);
-  const [selectedKeys, setSelectedKeys] = useState([]);
+  const collapsed = useProjectStore((state) => state.collapsed);
+  // const theme = useProjectStore((state) => state.theme);
+  const [selectedKeys, _] = useState([]);
 
   const getTreeMenu = (data: any) => {
     const arr: any = [];
@@ -48,11 +49,7 @@ export default function MenuComponent() {
       <Menu
         onClick={onClick}
         selectedKeys={selectedKeys}
-        style={{
-          height: "calc(100vh - 64px)",
-          border: "none",
-          overflowY: "auto",
-        }}
+        className={styles["adm-menu"]}
         mode="inline"
         inlineCollapsed={collapsed}
         items={menuList}

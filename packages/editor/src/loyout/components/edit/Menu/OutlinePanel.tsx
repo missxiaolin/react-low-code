@@ -2,6 +2,7 @@ import { memo, useEffect, useMemo, useState } from "react";
 import { Tree, Row } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { usePageStore } from "@/stores/pageStore";
+// 工具函数，它对返回的对象进行浅层比较，如果对象的顶层属性和之前的状态一样，即使引用不同，也不会重新渲染组件。
 import { useShallow } from "zustand/react/shallow";
 import style from "./index.module.scss";
 import { cloneDeep } from "lodash-es";

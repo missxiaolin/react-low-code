@@ -8,19 +8,11 @@ import {
   MoonFilled,
   SunOutlined,
 } from "@ant-design/icons";
-import { useEffect } from "react";
 
 export default function Header() {
   const { collapsed, setTheme, updateCollapsed, theme } = usePageStore(
     (state) => state
   );
-
-  useEffect(() => {
-    document.documentElement.setAttribute(
-      "data-theme",
-      theme === "dark" ? "dark" : "light"
-    );
-  }, [theme]);
 
   return (
     <div className={style.header}>

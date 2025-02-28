@@ -6,8 +6,7 @@ import { admRouter } from "../../router/index";
 export default function MenuComponent() {
   const [menuList, setMenuList] = useState([]);
   const collapsed = usePageStore((state) => state.collapsed);
-  const theme = usePageStore((state) => state.theme);
-  const [selectedKeys, setSelectedKeys] = useState([]);
+  const [selectedKeys, _] = useState([]);
 
   const getTreeMenu = (data: any) => {
     const arr: any = [];

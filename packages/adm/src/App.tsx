@@ -6,9 +6,10 @@ import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { RouterProvider } from "react-router-dom";
+import { useEffect } from "react";
 import router from "./router/index";
 import AntdGlobal from "./utils/AntdGlobal";
-import { usePageStore } from "./stores/pageStore";
+import { useProjectStore } from "./stores/pageStore";
 
 dayjs.extend(relativeTime);
 dayjs.extend(weekday);
@@ -18,7 +19,14 @@ dayjs.locale("zh-cn"); // 设置语言
 import "./App.scss";
 
 function App() {
-  const marsTheme = usePageStore((state) => state.theme);
+  const marsTheme = useProjectStore((state) => state.theme);
+
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      marsTheme === "dark" ? "dark" : "light"
+    );
+  }, [marsTheme]);
   return (
     <ConfigProvider
       locale={locale}

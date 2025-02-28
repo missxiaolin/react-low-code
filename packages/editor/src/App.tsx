@@ -9,6 +9,7 @@ import { RouterProvider } from "react-router-dom";
 import router from "./router/index";
 import AntdGlobal from "./utils/AntdGlobal";
 import { usePageStore } from "./stores/pageStore";
+import { useEffect } from "react";
 
 dayjs.extend(relativeTime);
 dayjs.extend(weekday);
@@ -19,6 +20,12 @@ import "./App.scss";
 
 function App() {
   const marsTheme = usePageStore((state) => state.theme);
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      marsTheme === "dark" ? "dark" : "light"
+    );
+  }, [marsTheme]);
   return (
     <ConfigProvider
       locale={locale}

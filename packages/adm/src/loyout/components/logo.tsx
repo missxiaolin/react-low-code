@@ -1,9 +1,9 @@
 import styles from "./logo.module.scss";
 import { useNavigate } from "react-router-dom";
-import { usePageStore } from "@/stores/pageStore";
+import { useProjectStore } from "@/stores/pageStore";
 
 export default function Logo() {
-  const { theme, collapsed } = usePageStore((state) => state);
+  const { theme, collapsed } = useProjectStore((state) => state);
   const navigate = useNavigate();
 
   return (
