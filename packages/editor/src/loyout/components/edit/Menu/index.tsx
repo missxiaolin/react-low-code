@@ -5,6 +5,7 @@ import {
   QuestionCircleOutlined,
   PartitionOutlined,
   CodeOutlined,
+  FunctionOutlined,
 } from "@ant-design/icons";
 import styles from "./index.module.scss";
 import { Suspense, lazy } from "react";
@@ -14,6 +15,8 @@ import SpinLoading from "@/components/SpinLoading";
 const OutlinePanel = lazy(() => import("./OutlinePanel"));
 // 页面源码
 const CodingPanel = lazy(() => import("./CodingPanel"));
+// 页面变量
+const VariableList = lazy(() => import("./Variable/VariableList"));
 
 export default function Menu() {
   const panels = [
@@ -56,6 +59,15 @@ export default function Menu() {
       title: <span>页面JSON</span>,
       component: () => {
         return <CodingPanel />;
+      },
+    },
+    {
+      key: "Variable",
+      icon: <FunctionOutlined />,
+      label: "变量",
+      title: <span>页面变量</span>,
+      component: () => {
+        return <VariableList />;
       },
     },
   ];

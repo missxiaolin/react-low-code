@@ -83,6 +83,9 @@ export interface PageAction {
   removeElements: (payload: any) => void; // 删除元素
   editElement: (payload: any) => void; // 编辑元素
   dragSortElements: (payload: any) => void; // 拖拽排序
+  addVariable: (payload: PageVariable) => void; // 添加变量
+  editVariable: (payload: PageVariable) => void; // 编辑变量
+  removeVariable: (name: string) => void; // 删除变量
 }
 
 export const usePageStore = create<PageState & PageAction>((set) => ({
@@ -442,6 +445,37 @@ export const usePageStore = create<PageState & PageAction>((set) => ({
     set(
       produce((state) => {
         delete state.page.apis[id];
+      })
+    );
+  },
+  // 添加变量
+  addVariable(payload: PageVariable) {
+    set(
+      produce((state) => {
+        state.page.variables.push(payload);
+      })
+    );
+  },
+  // 更新变量
+  editVariable(payload: PageVariable) {
+    set(
+      produce((state) => {
+        const index = state.page.variables.findIndex(
+          (item: PageVariable) => item.name == payload.name
+        );
+        if (index > -1) {
+          state.page.variables[index] = payload;
+        }
+      })
+    );
+  },
+  // 删除变量
+  removeVariable(name: string) {
+    set(
+      produce((state) => {
+        state.page.variables = state.page.variables.filter(
+          (item: PageVariable) => item.name !== name
+        );
       })
     );
   },
