@@ -86,6 +86,7 @@ export interface PageAction {
   addVariable: (payload: PageVariable) => void; // 添加变量
   editVariable: (payload: PageVariable) => void; // 编辑变量
   removeVariable: (name: string) => void; // 删除变量
+  setInterceptor: (payload: any) => void; // 设置拦截器
 }
 
 export const usePageStore = create<PageState & PageAction>((set) => ({
@@ -476,6 +477,13 @@ export const usePageStore = create<PageState & PageAction>((set) => ({
         state.page.variables = state.page.variables.filter(
           (item: PageVariable) => item.name !== name
         );
+      })
+    );
+  },
+  setInterceptor(payload: any) {
+    set(
+      produce((state) => {
+        state.page.interceptor = payload;
       })
     );
   },

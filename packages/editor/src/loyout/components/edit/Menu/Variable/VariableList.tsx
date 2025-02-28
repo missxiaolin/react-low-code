@@ -35,7 +35,7 @@ export default () => {
         justify="space-between"
         align="center"
         style={{
-          borderBottom: "1px solid var(--mars-theme-card-border-color)",
+          borderBottom: "1px solid var(--l-theme-card-border-color)",
         }}
       >
         <Button type="link" icon={<PlusOutlined />} onClick={() => handleAdd()}>

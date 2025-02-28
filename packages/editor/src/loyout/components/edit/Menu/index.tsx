@@ -6,6 +6,7 @@ import {
   PartitionOutlined,
   CodeOutlined,
   FunctionOutlined,
+  ApiOutlined,
 } from "@ant-design/icons";
 import styles from "./index.module.scss";
 import { Suspense, lazy } from "react";
@@ -17,6 +18,8 @@ const OutlinePanel = lazy(() => import("./OutlinePanel"));
 const CodingPanel = lazy(() => import("./CodingPanel"));
 // 页面变量
 const VariableList = lazy(() => import("./Variable/VariableList"));
+// 接口列表
+const ApiList = lazy(() => import("./ApiList"));
 
 export default function Menu() {
   const panels = [
@@ -59,6 +62,15 @@ export default function Menu() {
       title: <span>页面JSON</span>,
       component: () => {
         return <CodingPanel />;
+      },
+    },
+    {
+      key: "ApiList",
+      icon: <ApiOutlined />,
+      label: "接口",
+      title: <span>页面接口</span>,
+      component: () => {
+        return <ApiList />;
       },
     },
     {
