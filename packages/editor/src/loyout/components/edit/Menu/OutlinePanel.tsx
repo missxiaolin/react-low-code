@@ -66,7 +66,6 @@ const OutlinePanel = memo(() => {
 
   // 拖拽排序
   const onDrop = (info: any) => {
-    console.log(info);
     const {
       key: dragKey,
       type: dragType,
